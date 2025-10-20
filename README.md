@@ -16,7 +16,7 @@ Install [OpenFHE](https://openfhe.org) by following their
 ### Clone OpenFHE
 
 ```bash
-git clone git@github.com:openfheorg/openfhe-development.git openfhe-dev
+git clone --branch v1.3.0 git@github.com:openfheorg/openfhe-development.git openfhe-dev
 ```
 
 ### Build and install OpenFHE
