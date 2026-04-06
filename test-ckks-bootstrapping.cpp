@@ -39,7 +39,11 @@ Example for CKKS bootstrapping with full packing
 
 #include "openfhe.h"
 #include "ciphertext-utils.h"
+#include "poly-utils.h"
+#include "analysis.h"
 #include <chrono>
+#include <omp.h>
+#include <thread>
 
 using namespace lbcrypto;
 
@@ -172,9 +176,14 @@ double SimpleBootstrapExample(uint32_t numSlots,bool verbose=false) {
 
 void testCKKSBootstrap()
 {
+    #pragma omp parallel
+    {
+        #pragma omp master
+        std::cout << "OpenMP is using " << omp_get_num_threads() << " threads." << std::endl;
+    }
     uint32_t ntries=5;
     std::vector<double> vec;
-    for(size_t i= 0; i<11; i++) {
+    for(size_t i= 0; i<9; i++) {
         double total=0;
         uint32_t numSlots=1<<i;
         for(size_t j=0; j<ntries; j++) {
@@ -183,6 +192,7 @@ void testCKKSBootstrap()
         }
         std::cout << "Average time: " << total/ntries << std::endl << std::endl;
         vec.push_back(total/ntries);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
     std::cout << "[ "; 

@@ -123,6 +123,30 @@ std::vector<std::complex<double>> DecryptCKKSPackedValue(
     return result->GetCKKSPackedValue();
 }
 
+std::vector<double> DecryptCKKSPackedValueReal(
+    const Ciphertext<DCRTPoly>& ciphertext, 
+    const PrivateKey<DCRTPoly>& privateKey, 
+    uint32_t numSlots) {
+    std::vector<std::complex<double>> packedValue = DecryptCKKSPackedValue(ciphertext, privateKey, numSlots);
+    std::vector<double> realValues(numSlots);
+    for (size_t i = 0; i < numSlots; i++) {
+        realValues[i] = packedValue[i].real();  // Extract the real part of each complex number    
+    }
+    return realValues; 
+}
+
+std::vector<int> DecryptCKKSPackedValueInt(
+    const Ciphertext<DCRTPoly>& ciphertext, 
+    const PrivateKey<DCRTPoly>& privateKey, 
+    uint32_t numSlots) {
+    std::vector<std::complex<double>> packedValue = DecryptCKKSPackedValue(ciphertext, privateKey, numSlots);
+    std::vector<int> intValues(numSlots);
+    for (size_t i = 0; i < numSlots; i++) {
+        intValues[i] = static_cast<int>(std::round(packedValue[i].real()));  // Convert to integer
+    }
+    return intValues; 
+}
+
 std::vector<double> genUniformReal(uint32_t n) {
     std::vector<double> vec(n);
     std::random_device rd;  
@@ -134,12 +158,13 @@ std::vector<double> genUniformReal(uint32_t n) {
     return vec;
 }
 
-double estimatePrecision(std::vector<std::complex<double>> &v1, std::vector<std::complex<double>> &v2) {
-    double precVal=0.;
-    uint32_t n=v1.size();
-    for(size_t i=0; i<n; i++) {
-        double prec=-std::log2(abs(v1[i].real()-v2[i].real())/abs(v2[i].real()));
-        precVal+=prec;
+std::vector<double> genUniformBinary(uint32_t n) {
+    std::vector<double> vec(n);
+    std::random_device rd;  
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 1);
+    for (size_t i = 0; i < n; i++) {
+        vec[i] = dis(gen);
     }
-    return precVal/n;
-}
+    return vec;
+}   

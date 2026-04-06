@@ -42,6 +42,8 @@ include_directories( ${OpenFHE_INCLUDE}/pke )
 include_directories( ${OpenFHE_INCLUDE}/binfhe )
 ### add directories for other OpenFHE modules as needed for your project
 
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
 link_directories( ${OpenFHE_LIBDIR} )
 link_directories( ${OPENMP_LIBRARIES} )
 if(BUILD_STATIC)
@@ -58,5 +60,7 @@ endif()
 ### EXAMPLE:
 ### add_executable( test demo-simple-example.cpp )
 
-add_executable( test-ckks-bootstrapping test-ckks-bootstrapping.cpp ciphertext-utils.cpp poly-utils.cpp)
-add_executable( test-new-bootstrapping test-new-bootstrapping.cpp poly-utils.cpp ciphertext-utils.cpp slotstocoeffs-utils.cpp)
+add_executable( test-ckks-bootstrapping test-ckks-bootstrapping.cpp src/ciphertext-utils.cpp src/poly-utils.cpp src/utils.cpp src/analysis.cpp)
+add_executable( test-new-bootstrapping test-new-bootstrapping.cpp src/poly-utils.cpp 
+src/ciphertext-utils.cpp src/slotstocoeffs-utils.cpp src/analysis.cpp src/params.cpp src/keygen.cpp src/utils.cpp src/single_slot.cpp src/multiple_slot.cpp)
+

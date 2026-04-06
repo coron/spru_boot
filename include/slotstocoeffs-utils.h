@@ -7,14 +7,14 @@
 #include <memory>
 #include "openfhe.h"
 
-using namespace lbcrypto;
 
 // Function to convert slots to coefficients
-Ciphertext<DCRTPoly> SlotsToCoeffs(const CryptoContext<DCRTPoly>& cryptoContext, const Ciphertext<DCRTPoly>& ciph);
+lbcrypto::Ciphertext<lbcrypto::DCRTPoly> SlotsToCoeffs(const lbcrypto::CryptoContext<lbcrypto::DCRTPoly>& cryptoContext, 
+    const lbcrypto::Ciphertext<lbcrypto::DCRTPoly>& ciph);
 
 // Function to set up the SlotsToCoeffs operation
 void EvalSlotsToCoeffsSetup(
-    const CryptoContext<DCRTPoly>& cryptoContext,
+    const lbcrypto::CryptoContext<lbcrypto::DCRTPoly>& cryptoContext,
     uint32_t levelBudget,
     uint32_t numSlots,
     uint32_t lDec);

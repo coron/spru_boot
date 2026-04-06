@@ -1,0 +1,20 @@
+diff --git a/src/pke/include/scheme/ckksrns/ckksrns-fhe.h b/src/pke/include/scheme/ckksrns/ckksrns-fhe.h
+index 233234e6..0a81bee4 100644
+--- a/src/pke/include/scheme/ckksrns/ckksrns-fhe.h
++++ b/src/pke/include/scheme/ckksrns/ckksrns-fhe.h
+@@ -126,13 +126,14 @@ public:
+ using namespace std::literals::complex_literals;
+ 
+ class FHECKKSRNS : public FHERNS {
+-private:
++protected:
+     // correction factor, which we scale the message by to improve precision
+     uint32_t m_correctionFactor;
+ 
+     // key tuple is dim1, levelBudgetEnc, levelBudgetDec
+     std::map<uint32_t, std::shared_ptr<CKKSBootstrapPrecom>> m_bootPrecomMap;
+ 
++private:
+     using ParmType = typename DCRTPoly::Params;
+     using DugType  = typename DCRTPoly::DugType;
+     using DggType  = typename DCRTPoly::DggType;
